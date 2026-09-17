@@ -228,6 +228,14 @@
   }
   .modal-success h3{margin-bottom:8px;}
   .modal-success p{margin-bottom:0;}
+  .dl-list{display:flex;flex-direction:column;gap:8px;text-align:left;}
+  .dl-list a{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:#fff;border:1.5px solid #E7DECE;border-radius:10px;padding:12px 14px;
+    font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;
+  }
+  .dl-list a:hover{border-color:var(--accent);color:var(--accent);}
+  .dl-list a::after{content:'\2193';color:var(--accent);font-weight:700;}
 
   /* Body sections below the hero */
   body{background:var(--cream);}
@@ -551,24 +559,28 @@
 
       <div id="examModalForm">
         <h3>Download free mock exams</h3>
-        <p>Pick your level and we'll send a set of mock exams straight to your inbox.</p>
-        <p class="level-label">Your level</p>
-        <div class="level-chips">
-          <button class="level-chip" type="button" data-level="A2">A2</button>
-          <button class="level-chip" type="button" data-level="B1">B1</button>
-        </div>
-        <p class="modal-error" id="examError">Pick a level and enter a valid email address.</p>
+        <p>Leave your email and get direct links to every free mock exam PDF, reading, writing, KNM and ONA.</p>
+        <p class="modal-error" id="examError">Enter a valid email address.</p>
         <div class="quiz-email-row">
           <input type="email" id="examEmail" placeholder="you@email.com">
-          <button class="quiz-submit" id="examSubmit" type="button">Send exams</button>
+          <button class="quiz-submit" id="examSubmit" type="button">Show downloads</button>
         </div>
-        <p class="modal-fineprint">By submitting, you agree to receive your mock exams and occasional emails from us about inburgering prep. Unsubscribe anytime.</p>
+        <p class="modal-fineprint">By submitting, you agree to occasional emails from us about inburgering prep. Unsubscribe anytime.</p>
       </div>
 
       <div class="modal-success" id="examSuccess" hidden>
         <div class="check">&#10003;</div>
-        <h3 id="examSuccessTitle">Sent!</h3>
-        <p id="examSuccessText">Check your inbox for your mock exam set.</p>
+        <h3>Here are your mock exams</h3>
+        <p style="margin-bottom:16px;">Seven free PDFs, open any of them now or save them for later.</p>
+        <div class="dl-list">
+          <a href="downloads/oefenexamen-inburgering-lezen-a2-1.pdf" target="_blank" rel="noopener">Lezen, A2, oefenexamen 1</a>
+          <a href="downloads/oefenexamen-inburgering-lezen-b1-1.pdf" target="_blank" rel="noopener">Lezen, B1, oefenexamen 1</a>
+          <a href="downloads/oefenexamen-inburgering-schrijven-a2-1.pdf" target="_blank" rel="noopener">Schrijven, A2, oefenexamen 1</a>
+          <a href="downloads/oefenexamen-inburgering-schrijven-b1-1.pdf" target="_blank" rel="noopener">Schrijven, B1, oefenexamen 1</a>
+          <a href="downloads/oefenexamen-inburgering-knm-1.pdf" target="_blank" rel="noopener">KNM, oefenexamen 1</a>
+          <a href="downloads/oefenexamen-inburgering-knm-2.pdf" target="_blank" rel="noopener">KNM, oefenexamen 2</a>
+          <a href="downloads/oefenexamen-inburgering-ona-1.pdf" target="_blank" rel="noopener">ONA, oefenexamen 1</a>
+        </div>
       </div>
     </div>
   </div>
@@ -620,7 +632,7 @@
           <li>Writing exam with model answers</li>
           <li>KNM (knowledge of Dutch society) sample questions</li>
         </ul>
-        <button class="download-btn" type="button" data-open-level="A2">Download A2 pack</button>
+        <button class="download-btn" type="button" data-open-level="A2">Download PDF</button>
         <a class="card-link" href="inburgeringsexamen-a2.html">Full A2 exam guide &rarr;</a>
       </div>
       <div class="download-card">
@@ -631,7 +643,7 @@
           <li>Writing exam with model answers</li>
           <li>KNM (knowledge of Dutch society) sample questions</li>
         </ul>
-        <button class="download-btn" type="button" data-open-level="B1">Download B1 pack</button>
+        <button class="download-btn" type="button" data-open-level="B1">Download PDF</button>
         <a class="card-link" href="inburgeringsexamen-b1.html">Full B1 exam guide &rarr;</a>
       </div>
     </div>
@@ -1042,18 +1054,14 @@ if(mockExamsDd){
 
 (function(){
   var openBtns = [document.getElementById('openExamModal'), document.getElementById('openExamModal2'), document.getElementById('openExamModal3'), document.getElementById('openExamModal4'), document.getElementById('openExamModal5')];
-  var levelBtns = document.querySelectorAll('[data-open-level]');
+  var downloadBtns = document.querySelectorAll('.download-btn');
   var closeBtn = document.getElementById('examModalClose');
   var backdrop = document.getElementById('examModal');
   var form = document.getElementById('examModalForm');
   var success = document.getElementById('examSuccess');
-  var chips = document.querySelectorAll('.level-chip');
   var emailInput = document.getElementById('examEmail');
   var submitBtn = document.getElementById('examSubmit');
   var errorMsg = document.getElementById('examError');
-  var successTitle = document.getElementById('examSuccessTitle');
-  var successText = document.getElementById('examSuccessText');
-  var selectedLevel = null;
 
   function openModal(){
     backdrop.hidden = false;
@@ -1061,19 +1069,9 @@ if(mockExamsDd){
     success.hidden = true;
   }
   function closeModal(){ backdrop.hidden = true; }
-  function selectLevel(level){
-    selectedLevel = level;
-    chips.forEach(function(c){ c.classList.toggle('active', c.dataset.level === level); });
-    errorMsg.classList.remove('show');
-  }
 
   openBtns.forEach(function(btn){ if(btn){ btn.addEventListener('click', openModal); } });
-  levelBtns.forEach(function(btn){
-    btn.addEventListener('click', function(){
-      openModal();
-      selectLevel(btn.dataset.openLevel);
-    });
-  });
+  downloadBtns.forEach(function(btn){ btn.addEventListener('click', openModal); });
   if(closeBtn){ closeBtn.addEventListener('click', closeModal); }
   if(backdrop){
     backdrop.addEventListener('click', function(e){
@@ -1081,27 +1079,16 @@ if(mockExamsDd){
     });
   }
 
-  chips.forEach(function(chip){
-    chip.addEventListener('click', function(){
-      chips.forEach(function(c){ c.classList.remove('active'); });
-      chip.classList.add('active');
-      selectedLevel = chip.dataset.level;
-      errorMsg.classList.remove('show');
-    });
-  });
-
   submitBtn.addEventListener('click', function(){
     var val = emailInput.value.trim();
     var validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-    if(!selectedLevel || !validEmail){
+    if(!validEmail){
       errorMsg.classList.add('show');
-      emailInput.style.borderColor = validEmail ? '#E7DECE' : 'var(--bad)';
+      emailInput.style.borderColor = 'var(--bad)';
       return;
     }
     form.hidden = true;
     success.hidden = false;
-    successTitle.textContent = 'Sent!';
-    successText.textContent = 'Check your inbox for your ' + selectedLevel + ' mock exam set.';
   });
 })();
 </script>
