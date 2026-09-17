@@ -1,0 +1,370 @@
+<title>KNM Examen Oefenen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --navy:#10151F; --navy-2:#161D2C; --ink:#0F1319; --white:#FFFFFF; --cream:#FBF4EA;
+    --accent:#F0651A; --accent-2:#FFB648; --line:rgba(255,255,255,0.14); --muted:rgba(251,244,234,0.68);
+    --good:#2E9E5B; --bad:#E14B4B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;}
+  .pagehead{
+    position:relative;overflow:hidden;
+    background:radial-gradient(ellipse 800px 500px at 85% 0%, rgba(240,101,26,0.30), transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    padding-bottom:clamp(40px,6vw,64px);
+  }
+  nav{max-width:1220px;margin:0 auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand img{height:44px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,0.35));}
+  .brand-word{font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:#fff;letter-spacing:-.01em;}
+  .brand-word span{color:var(--accent-2);}
+  .nav-links{display:flex;align-items:center;gap:26px;list-style:none;margin:0;padding:0;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;}
+  .nav-links a:hover{color:#fff;}
+  .nav-links a.active{color:#fff;border-bottom:2px solid var(--accent);padding-bottom:3px;}
+  .has-dd{position:relative;}
+  .has-dd > a{display:inline-flex;align-items:center;gap:5px;}
+  .dd-chev{font-size:10px;transition:transform .2s ease;}
+  .has-dd:hover .dd-chev, .has-dd:focus-within .dd-chev{transform:rotate(180deg);}
+  .dd-panel{
+    position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);
+    background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:10px;
+    min-width:230px;box-shadow:0 20px 44px rgba(0,0,0,0.4);display:flex;flex-direction:column;gap:2px;
+    opacity:0;visibility:hidden;transition:opacity .2s ease, transform .2s ease, visibility .2s;z-index:40;
+  }
+  .has-dd:hover > .dd-panel, .has-dd:focus-within > .dd-panel{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+  .dd-panel a{padding:9px 12px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;white-space:nowrap;}
+  .dd-panel a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+  @media (max-width:860px){
+    .dd-panel{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:none;background:transparent;padding:0 0 0 14px;margin-top:6px;display:none;}
+    .has-dd.mobile-open .dd-panel{display:flex;}
+    .dd-chev{display:none;}
+  }
+  .nav-cta{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:11px 20px;font-family:inherit;font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap;}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:40px;height:40px;color:#fff;}
+  @media (max-width:860px){
+    .nav-links{position:absolute;top:74px;left:16px;right:16px;background:var(--navy-2);border:1px solid var(--line);border-radius:14px;flex-direction:column;align-items:flex-start;padding:16px 20px;gap:14px;display:none;}
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+    .nav-links a{font-size:15px;}
+  }
+  .breadcrumb{max-width:1220px;margin:0 auto;padding:0 24px;font-size:12.5px;color:var(--muted);}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:#fff;}
+  .pagehead-body{max-width:800px;margin:0 auto;padding:22px 24px 0;text-align:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;background:rgba(240,101,26,0.14);
+    border:1px solid rgba(240,101,26,0.4);border-radius:999px;padding:7px 16px;font-size:12px;
+    font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2);margin-bottom:20px;
+  }
+  h1{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:clamp(28px,4.2vw,42px);line-height:1.14;margin:0 0 16px;text-wrap:balance;}
+  .pagehead-sub{font-size:clamp(15px,1.6vw,17px);line-height:1.6;color:var(--muted);margin:0 0 26px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:22px;}
+  .btn-primary{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:15px 26px;font-weight:700;font-size:15px;font-family:inherit;text-decoration:none;cursor:pointer;box-shadow:0 3px 8px rgba(240,101,26,0.18);}
+  .btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;padding:14px 24px;font-weight:600;font-size:15px;font-family:inherit;text-decoration:none;}
+  .trust-row{display:flex;align-items:center;gap:12px;justify-content:center;font-size:13.5px;color:var(--muted);}
+  .stars{color:var(--accent-2);font-size:16px;letter-spacing:1px;}
+
+  .section{max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,80px) 24px;}
+  .section-alt{background:#F3ECDD;}
+  .section-alt > .section{padding-top:clamp(48px,7vw,80px);padding-bottom:clamp(48px,7vw,80px);}
+  .section-head{max-width:700px;margin:0 0 32px;}
+  .section-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
+  .section h2{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);font-size:clamp(24px,3vw,32px);line-height:1.16;margin:0 0 12px;text-wrap:balance;}
+  .section-head p{font-size:15.5px;line-height:1.6;color:#5C5347;margin:0;}
+  .prose{max-width:760px;font-size:15px;line-height:1.7;color:#3A342C;}
+  .prose p{margin:0 0 16px;}
+  .prose strong{color:var(--ink);}
+
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:700px){.compare{grid-template-columns:1fr;}}
+  .compare-card{background:#fff;border:1.5px solid #E7DECE;border-radius:16px;padding:24px;}
+  .compare-card.hl{border-color:var(--accent);box-shadow:0 14px 30px rgba(240,101,26,0.12);}
+  .compare-card .level-tag{font-family:'Fraunces',serif;font-weight:700;font-size:22px;color:var(--accent);margin-bottom:10px;display:block;}
+  .compare-card h3{font-size:15px;font-weight:700;margin:0 0 10px;color:var(--ink);}
+  .compare-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .compare-card li{font-size:13.5px;color:#4A4238;padding-left:22px;position:relative;line-height:1.5;}
+  .compare-card li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+
+  .onderdelen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media (max-width:820px){.onderdelen-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.onderdelen-grid{grid-template-columns:1fr;}}
+  .onderdeel{background:#fff;border:1px solid #E7DECE;border-radius:14px;padding:18px 20px;}
+  .onderdeel h4{font-family:'Fraunces',serif;font-size:14.5px;margin:0 0 6px;color:var(--ink);}
+  .onderdeel p{font-size:12.5px;color:#6B5F4F;margin:0;line-height:1.5;}
+
+  .faq-list{display:flex;flex-direction:column;gap:12px;max-width:820px;}
+  .faq-item{background:#FFFFFF;border:1px solid #E7DECE;border-radius:14px;padding:4px 22px;}
+  .faq-item summary{padding:17px 0;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-size:19px;color:var(--accent);flex:none;}
+  .faq-item[open] summary::after{content:'\2212';}
+  .faq-item p{font-size:13.5px;line-height:1.6;color:#5C5347;margin:0 0 18px;}
+
+  .cta-band{background:linear-gradient(135deg, var(--navy) 0%, #1C2740 100%);color:#fff;border-radius:26px;margin:0 24px;padding:clamp(36px,6vw,56px) clamp(24px,6vw,56px);text-align:center;max-width:1172px;margin-left:auto;margin-right:auto;}
+  .cta-band h2{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,30px);margin:0 0 12px;color:#fff;text-wrap:balance;}
+  .cta-band p{font-size:14.5px;color:var(--muted);max-width:50ch;margin:0 auto 24px;}
+  footer{background:var(--navy);color:var(--muted);margin-top:clamp(48px,7vw,80px);padding-top:clamp(40px,6vw,60px);}
+  .footer-grid{max-width:1220px;margin:0 auto;padding:0 24px clamp(28px,5vw,40px);display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;}
+  @media (max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+  .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .footer-brand img{height:32px;}
+  .footer-brand span{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:15px;}
+  .footer-col p{font-size:13px;line-height:1.6;max-width:34ch;margin:0;}
+  .footer-col h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin:0 0 14px;font-weight:700;}
+  .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .footer-col a{color:var(--muted);text-decoration:none;font-size:13px;}
+  .footer-col a:hover{color:#fff;}
+  .footer-bottom{border-top:1px solid var(--line);padding:18px 24px;max-width:1220px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11.5px;color:rgba(251,244,234,0.45);}
+</style>
+
+<div class="pagehead">
+  <nav>
+    <a class="brand" href="index.html">
+      <img src="images/logo-icon.png" alt="InburgeringsexamenPrep.nl logo">
+      <span class="brand-word">inburgeringsexamenprep<span>.nl</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li class="has-dd" id="mockExamsDd">
+        <a class="active" href="inburgeringsexamen-oefenen.html">Mock exams <span class="dd-chev">&#9662;</span></a>
+        <div class="dd-panel">
+          <a href="inburgeringsexamen-oefenen.html">Alle oefenexamens</a>
+          <a href="inburgeringsexamen-a2.html">A2 examen</a>
+          <a href="inburgeringsexamen-b1.html">B1 examen</a>
+          <a href="knm-examen-oefenen.html">KNM oefenen</a>
+          <a href="staatsexamen-nt2.html">Staatsexamen NT2</a>
+          <a href="inburgeringscursus-kosten.html">Kosten &amp; vergelijking</a>
+        </div>
+      </li>
+      <li><a href="index.html#tijdlijn">Timeline</a></li>
+      <li><a href="index.html#pakketten">Packages</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="voor-docenten.html">For coaches</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a class="nav-cta" href="aanmelden.html">Book a free intake call</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+  <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; <a href="inburgeringsexamen-oefenen.html">Mock exams</a> &nbsp;/&nbsp; KNM</div>
+  <div class="pagehead-body">
+    <div class="eyebrow">KNM &middot; Kennis van de Nederlandse Maatschappij</div>
+    <h1>KNM examen oefenen: Kennis van de Nederlandse Maatschappij</h1>
+    <p class="pagehead-sub">KNM is het onderdeel van het inburgeringsexamen over het dagelijks leven in Nederland. Hier lees je wat erin zit en hoe je gericht oefent, met echte, originele oefenvragen.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" type="button" id="openExamModal">Download gratis KNM oefenexamen</button>
+      <a class="btn-ghost" href="aanmelden.html">Boek een gratis intake</a>
+    </div>
+    <div class="trust-row"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>5.0, 9 echte reviews</span></div>
+  </div>
+</div>
+
+<section class="section" id="uitleg">
+  <div class="section-head">
+    <span class="section-eyebrow">Uitleg</span>
+    <h2>Wat is KNM en waarom is het verplicht?</h2>
+  </div>
+  <div class="prose">
+    <p>KNM staat voor Kennis van de Nederlandse Maatschappij en is een verplicht onderdeel van het inburgeringsexamen, op zowel A2- als B1-niveau. Het toetst of je de belangrijkste praktische en maatschappelijke zaken kent om je in Nederland te kunnen redden.</p>
+    <p>Het examen bestaat uit meerkeuzevragen over praktijksituaties: wat doe je als je een huisarts nodig hebt, hoe werkt de zorgverzekering, waar meld je je aan bij een verhuizing. Het gaat dus niet om droge feitjes uit een geschiedenisboek, maar om praktische kennis die je echt gebruikt.</p>
+    <p>Goed nieuws: KNM is met gerichte voorbereiding relatief snel te leren, vooral als je de onderwerpen structureert en er praktijkvragen op oefent in plaats van losse feiten te stampen.</p>
+    </div>
+</section>
+
+<section class="section-alt" id="format">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">Examenformaat</span>
+      <h2>Hoe ziet het KNM-examen eruit</h2>
+    </div>
+    <div class="compare">
+      <div class="compare-card hl">
+        <span class="level-tag">Vorm</span>
+        <h3>Meerkeuzevragen op de computer</h3>
+        <ul>
+          <li>Praktijksituaties, geen droge feitjes</li>
+          <li>Vast aantal vragen binnen een tijdslimiet</li>
+          <li>Verplicht op zowel A2 als B1</li>
+        </ul>
+      </div>
+      <div class="compare-card">
+        <span class="level-tag">Aanpak</span>
+        <h3>Hoe je het slim aanpakt</h3>
+        <ul>
+          <li>Structureer per thema in plaats van losse feiten</li>
+          <li>Oefen met praktijkvragen, niet met opsommingen</li>
+          <li>Herhaal de onderwerpen waar je op vastloopt</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="onderwerpen">
+  <div class="section-head">
+    <span class="section-eyebrow">Onderwerpen</span>
+    <h2>Waar gaat KNM precies over</h2>
+    <p>Zes hoofdthema's over het dagelijks leven en de samenleving in Nederland.</p>
+  </div>
+  <div class="onderdelen-grid">
+    <div class="onderdeel"><h4>Wonen</h4><p>Huren, kopen, de buurt, energie en afval</p></div>
+    <div class="onderdeel"><h4>Werk &amp; inkomen</h4><p>Solliciteren, contracten, belasting, uitkeringen</p></div>
+    <div class="onderdeel"><h4>Gezondheidszorg</h4><p>Huisarts, ziekenhuis, verzekering, apotheek</p></div>
+    <div class="onderdeel"><h4>Onderwijs</h4><p>Schoolsysteem, kinderopvang, studiefinanciering</p></div>
+    <div class="onderdeel"><h4>Geschiedenis &amp; staat</h4><p>Bestuur, wetten, belangrijke gebeurtenissen</p></div>
+    <div class="onderdeel"><h4>Normen &amp; waarden</h4><p>Omgangsvormen, gelijkheid, vrijheid van mening</p></div>
+  </div>
+</section>
+
+<section class="section-alt" id="oefenen">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">Oefenen</span>
+      <h2>Begin met gratis oefenen</h2>
+      <p>De volledige bibliotheek met oefenexamens staat op de mock exams-pagina, met volledige tekst en downloadbare PDF's.</p>
+    </div>
+    <div class="hero-ctas" style="justify-content:flex-start;">
+      <a class="btn-primary" href="inburgeringsexamen-oefenen.html">Bekijk oefenexamens &rarr;</a>
+      <a class="btn-ghost" style="color:var(--ink);border-color:#D9CFBC;" href="aanmelden.html">Boek een gratis intake</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-head">
+    <span class="section-eyebrow">Veelgestelde vragen</span>
+    <h2>Vragen over het KNM-examen</h2>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item" open>
+      <summary>Moet ik KNM doen bij zowel A2 als B1?</summary>
+      <p>Ja, KNM is verplicht op beide niveaus. Het niveau van de vragen zelf verschilt wel iets.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Hoeveel vragen heeft het KNM-examen?</summary>
+      <p>Dat verschilt per examenversie, reken op een meerkeuze-examen van enkele tientallen vragen binnen een vastgestelde tijd.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Kan ik KNM los oefenen zonder de rest?</summary>
+      <p>Ja, op de mock exams-pagina staat KNM als los onderdeel met eigen oefenexamens.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Zijn de KNM-vragen hier hetzelfde als het echte examen?</summary>
+      <p>De vragen zijn door ons zelf gemaakt naar het format van het echte examen, niet letterlijk overgenomen.</p>
+    </details>
+  </div>
+</section>
+
+<div class="section">
+  <div class="cta-band">
+    <h2>Klaar om KNM te oefenen?</h2>
+    <p>Gratis oefenexamen downloaden, of direct een coach uit ons netwerk spreken.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" type="button" id="openExamModal2">Download gratis KNM oefenexamen</button>
+      <a class="btn-ghost" href="aanmelden.html">Boek een gratis intake</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-brand"><img src="images/logo-icon.png" alt="InburgeringsexamenPrep.nl logo"><span>inburgeringsexamenprep.nl</span></div>
+      <p>Practice tests, downloadable exams and 1-on-1 coaching for the Dutch inburgeringsexamen, A2 and B1.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Site</h4>
+      <ul><li><a href="index.html#hoe-het-werkt">How it works</a></li><li><a href="index.html#pakketten">Packages</a></li><li><a href="index.html#reviews">Reviews</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Oefenen</h4>
+      <ul><li><a href="inburgeringsexamen-oefenen.html">Alle oefenexamens</a></li><li><a href="inburgeringsexamen-a2.html">A2 examen</a></li><li><a href="inburgeringsexamen-b1.html">B1 examen</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul><li><a href="mailto:hello@inburgeringsexamenprep.nl">hello@inburgeringsexamenprep.nl</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 InburgeringsexamenPrep.nl &middot; KvK [nummer] &middot; Netherlands</span>
+    <span>Made for people who just want to pass their exam.</span>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="examModal" hidden style="position:fixed;inset:0;background:rgba(10,13,20,0.6);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;">
+  <div class="modal-card" style="background:var(--cream);color:var(--ink);border-radius:22px;padding:28px 28px 24px;max-width:420px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,0.5);position:relative;">
+    <button id="examModalClose" type="button" aria-label="Close" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:#EFE7D8;color:#6B5F4F;font-size:16px;cursor:pointer;">&times;</button>
+    <div id="examModalForm">
+      <h3 style="font-family:'Fraunces',serif;font-size:20px;margin:0 0 8px;padding-right:24px;">Download gratis mock exams</h3>
+      <p style="font-size:13.5px;color:#6B5F4F;line-height:1.5;margin:0 0 20px;">Kies je niveau, we sturen een set examens naar je inbox.</p>
+      <p style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#8A7F70;margin:0 0 10px;">Niveau</p>
+      <div style="display:flex;gap:10px;margin-bottom:20px;">
+        <button class="level-chip" type="button" data-level="A2" style="flex:1;padding:13px 10px;border-radius:12px;border:1.5px solid #E7DECE;background:#FFFFFF;font-family:inherit;font-weight:600;font-size:14.5px;color:var(--ink);cursor:pointer;">A2</button>
+        <button class="level-chip" type="button" data-level="B1" style="flex:1;padding:13px 10px;border-radius:12px;border:1.5px solid #E7DECE;background:#FFFFFF;font-family:inherit;font-weight:600;font-size:14.5px;color:var(--ink);cursor:pointer;">B1</button>
+      </div>
+      <p id="examError" style="font-size:12.5px;color:var(--bad);margin:-10px 0 14px;display:none;">Kies een niveau en vul een geldig e-mailadres in.</p>
+      <div style="display:flex;gap:8px;margin-bottom:6px;">
+        <input type="email" id="examEmail" placeholder="jij@email.com" style="flex:1;padding:13px 14px;border-radius:10px;border:1.5px solid #E7DECE;font-family:inherit;font-size:14.5px;color:var(--ink);background:#fff;">
+        <button id="examSubmit" type="button" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0 20px;font-weight:700;font-size:14.5px;font-family:inherit;cursor:pointer;white-space:nowrap;">Verstuur</button>
+      </div>
+      <p style="font-size:11.5px;color:#9A8F80;margin-top:10px;">Door te versturen ga je akkoord met het ontvangen van je oefenexamen en incidentele e-mails.</p>
+    </div>
+    <div id="examSuccess" hidden style="text-align:center;">
+      <div style="width:52px;height:52px;border-radius:50%;background:rgba(46,158,91,0.12);color:var(--good);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;">&#10003;</div>
+      <h3 id="examSuccessTitle" style="font-family:'Fraunces',serif;">Verstuurd!</h3>
+      <p id="examSuccessText" style="color:#6B5F4F;font-size:14px;">Check je inbox voor je oefenexamen.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var toggle = document.getElementById('navToggle');
+var links = document.getElementById('navLinks');
+if(toggle){ toggle.addEventListener('click', function(){ links.classList.toggle('open'); }); }
+var mockExamsDd = document.getElementById('mockExamsDd');
+if(mockExamsDd){
+  mockExamsDd.querySelector('a').addEventListener('click', function(e){
+    if(window.innerWidth <= 860){ e.preventDefault(); mockExamsDd.classList.toggle('mobile-open'); }
+  });
+}
+(function(){
+  var openBtns = [document.getElementById('openExamModal'), document.getElementById('openExamModal2')];
+  var closeBtn = document.getElementById('examModalClose');
+  var backdrop = document.getElementById('examModal');
+  var form = document.getElementById('examModalForm');
+  var success = document.getElementById('examSuccess');
+  var chips = document.querySelectorAll('.level-chip');
+  var emailInput = document.getElementById('examEmail');
+  var submitBtn = document.getElementById('examSubmit');
+  var errorMsg = document.getElementById('examError');
+  var successText = document.getElementById('examSuccessText');
+  var selectedLevel = 'A2';
+  chips.forEach(function(c){ if(c.dataset.level === 'A2'){ c.style.borderColor = 'var(--accent)'; c.style.color = 'var(--accent)'; } });
+
+  function openModal(){ backdrop.hidden = false; form.hidden = false; success.hidden = true; }
+  function closeModal(){ backdrop.hidden = true; }
+  openBtns.forEach(function(btn){ if(btn){ btn.addEventListener('click', openModal); } });
+  if(closeBtn){ closeBtn.addEventListener('click', closeModal); }
+  if(backdrop){ backdrop.addEventListener('click', function(e){ if(e.target === backdrop){ closeModal(); } }); }
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      selectedLevel = chip.dataset.level;
+      chips.forEach(function(c){ c.style.borderColor = '#E7DECE'; c.style.color = 'var(--ink)'; c.style.background='#fff'; });
+      chip.style.borderColor = 'var(--accent)'; chip.style.color = 'var(--accent)'; chip.style.background='rgba(240,101,26,0.1)';
+      errorMsg.style.display = 'none';
+    });
+  });
+  submitBtn.addEventListener('click', function(){
+    var val = emailInput.value.trim();
+    var validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if(!validEmail){ errorMsg.style.display='block'; emailInput.style.borderColor = 'var(--bad)'; return; }
+    form.hidden = true; success.hidden = false;
+    successText.textContent = 'Check je inbox voor je ' + selectedLevel + ' oefenexamen.';
+  });
+})();
+</script>
