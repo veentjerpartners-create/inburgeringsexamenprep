@@ -1,0 +1,717 @@
+<title>Inburgeringsexamen Oefenen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --navy:#10151F;
+    --navy-2:#161D2C;
+    --ink:#0F1319;
+    --white:#FFFFFF;
+    --cream:#FBF4EA;
+    --accent:#F0651A;
+    --accent-2:#FFB648;
+    --line:rgba(255,255,255,0.14);
+    --muted:rgba(251,244,234,0.68);
+    --good:#2E9E5B;
+    --bad:#E14B4B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;}
+
+  /* Nav + page header (dark) */
+  .pagehead{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(ellipse 800px 500px at 85% 0%, rgba(240,101,26,0.30), transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    padding-bottom:clamp(40px,6vw,64px);
+  }
+  nav{max-width:1220px;margin:0 auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand img{height:44px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,0.35));}
+  .brand-word{font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:#fff;letter-spacing:-.01em;}
+  .brand-word span{color:var(--accent-2);}
+  .nav-links{display:flex;align-items:center;gap:28px;list-style:none;margin:0;padding:0;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;}
+  .nav-links a:hover{color:#fff;}
+  .nav-links a.active{color:#fff;border-bottom:2px solid var(--accent);padding-bottom:3px;}
+  .has-dd{position:relative;}
+  .has-dd > a{display:inline-flex;align-items:center;gap:5px;}
+  .dd-chev{font-size:10px;transition:transform .2s ease;}
+  .has-dd:hover .dd-chev, .has-dd:focus-within .dd-chev{transform:rotate(180deg);}
+  .dd-panel{
+    position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);
+    background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:10px;
+    min-width:230px;box-shadow:0 20px 44px rgba(0,0,0,0.4);
+    display:flex;flex-direction:column;gap:2px;
+    opacity:0;visibility:hidden;transition:opacity .2s ease, transform .2s ease, visibility .2s;
+    z-index:40;
+  }
+  .has-dd:hover > .dd-panel, .has-dd:focus-within > .dd-panel{
+    opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+  }
+  .dd-panel a{padding:9px 12px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;white-space:nowrap;}
+  .dd-panel a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+  @media (max-width:860px){
+    .dd-panel{
+      position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:none;
+      background:transparent;padding:0 0 0 14px;margin-top:6px;display:none;
+    }
+    .has-dd.mobile-open .dd-panel{display:flex;}
+    .dd-chev{display:none;}
+  }
+  .nav-cta{
+    background:var(--accent);color:#fff;border:none;border-radius:12px;padding:11px 20px;
+    font-family:inherit;font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap;
+  }
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:40px;height:40px;color:#fff;}
+  @media (max-width:860px){
+    .nav-links{
+      position:absolute;top:74px;left:16px;right:16px;background:var(--navy-2);border:1px solid var(--line);
+      border-radius:14px;flex-direction:column;align-items:flex-start;padding:16px 20px;gap:14px;display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+    .nav-links a{font-size:15px;}
+  }
+
+  .breadcrumb{max-width:1220px;margin:0 auto;padding:0 24px;font-size:12.5px;color:var(--muted);}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:#fff;}
+
+  .pagehead-body{max-width:820px;margin:0 auto;padding:22px 24px 0;text-align:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;background:rgba(240,101,26,0.14);
+    border:1px solid rgba(240,101,26,0.4);border-radius:999px;padding:7px 16px;font-size:12px;
+    font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2);margin-bottom:20px;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:clamp(30px,4.4vw,44px);
+    line-height:1.12;margin:0 0 16px;text-wrap:balance;
+  }
+  .pagehead-sub{font-size:clamp(15.5px,1.6vw,17.5px);line-height:1.6;color:var(--muted);margin:0 0 28px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:26px;}
+  .btn-primary{
+    background:var(--accent);color:#fff;border:none;border-radius:12px;padding:15px 26px;
+    font-weight:700;font-size:15px;font-family:inherit;text-decoration:none;cursor:pointer;
+    box-shadow:0 3px 8px rgba(240,101,26,0.18);
+  }
+  .btn-ghost{
+    background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;
+    padding:14px 24px;font-weight:600;font-size:15px;font-family:inherit;text-decoration:none;
+  }
+  .trust-row{display:flex;align-items:center;gap:12px;justify-content:center;font-size:13.5px;color:var(--muted);}
+  .stars{color:var(--accent-2);font-size:16px;letter-spacing:1px;}
+
+  /* Body sections */
+  .section{max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,80px) 24px;}
+  .section-alt{background:#F3ECDD;}
+  .section-alt > .section{padding-top:clamp(48px,7vw,80px);padding-bottom:clamp(48px,7vw,80px);}
+  .section-head{max-width:640px;margin:0 0 36px;}
+  .section-eyebrow{
+    display:inline-block;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 10px;
+  }
+  .section h2{
+    font-family:'Fraunces',serif;font-weight:600;color:var(--ink);font-size:clamp(24px,3vw,32px);
+    line-height:1.16;margin:0 0 12px;text-wrap:balance;
+  }
+  .section-head p{font-size:15.5px;line-height:1.6;color:#5C5347;margin:0;}
+
+  /* Skills grid */
+  .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-card{background:#fff;border:1.5px solid #E7DECE;border-radius:16px;padding:22px;display:flex;flex-direction:column;}
+  .skill-tag{
+    align-self:flex-start;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+    background:#FBE7D6;color:var(--accent);border-radius:999px;padding:4px 11px;margin-bottom:12px;
+  }
+  .skill-card h3{font-family:'Fraunces',serif;font-size:16.5px;margin:0 0 8px;color:var(--ink);}
+  .skill-card p{font-size:13.5px;line-height:1.55;color:#6B5F4F;margin:0 0 18px;flex:1;}
+  .skill-btn{
+    align-self:flex-start;background:var(--ink);color:#fff;border:none;border-radius:10px;
+    padding:11px 20px;font-weight:700;font-size:13.5px;font-family:inherit;cursor:pointer;text-decoration:none;
+  }
+
+  /* Teacher callout */
+  .teacher-note{
+    display:flex;align-items:center;gap:16px;background:#FBE7D6;border:1px solid rgba(240,101,26,0.35);
+    border-radius:14px;padding:16px 20px;margin:0 0 40px;flex-wrap:wrap;
+  }
+  .teacher-note p{margin:0;font-size:13.5px;color:#6B3A16;line-height:1.5;flex:1;min-width:220px;}
+  .teacher-note a{color:var(--accent);font-weight:700;text-decoration:none;white-space:nowrap;}
+  .teacher-note a:hover{text-decoration:underline;}
+
+  /* Practice library */
+  .lib-block{margin-bottom:52px;}
+  .lib-block:last-child{margin-bottom:0;}
+  .lib-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+  .lib-head h3{font-family:'Fraunces',serif;font-size:20px;margin:0;color:var(--ink);}
+  .lib-head span{font-size:12.5px;color:#8A7F70;}
+  .lib-intro{font-size:14px;color:#5C5347;line-height:1.6;margin:0 0 18px;max-width:70ch;}
+  .set-item{background:#FFFFFF;border:1px solid #E7DECE;border-radius:14px;margin-bottom:12px;overflow:hidden;}
+  .set-item summary{
+    padding:16px 20px;font-weight:600;font-size:14.5px;color:var(--ink);cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .set-item summary::-webkit-details-marker{display:none;}
+  .set-item summary .chev{font-size:18px;color:var(--accent);flex:none;transition:transform .2s;}
+  .set-item[open] summary .chev{transform:rotate(45deg);}
+  .set-item summary .tag{
+    font-size:11px;font-weight:700;text-transform:uppercase;background:#FBE7D6;color:var(--accent);
+    border-radius:999px;padding:3px 10px;margin-right:auto;margin-left:12px;
+  }
+  .set-body{padding:0 20px 22px;border-top:1px solid #F0E9DA;}
+  .set-passage{
+    background:#F8F3E9;border-radius:10px;padding:14px 16px;margin:16px 0;font-size:13.5px;
+    line-height:1.65;color:#3A342C;
+  }
+  .set-q{margin:16px 0 0;}
+  .set-q p.q-text{font-size:13.5px;font-weight:600;color:var(--ink);margin:0 0 8px;}
+  .set-q ul{list-style:none;margin:0 0 8px;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .set-q li{font-size:13px;color:#4A4238;padding:8px 12px;border:1px solid #E7DECE;border-radius:8px;}
+  .set-answer{font-size:12.5px;color:var(--good);font-weight:600;margin:0;}
+  .set-cta{
+    margin-top:18px;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;
+    border:none;border-radius:10px;padding:11px 18px;font-weight:700;font-size:13px;font-family:inherit;cursor:pointer;
+  }
+
+  /* Comparison */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:700px){.compare{grid-template-columns:1fr;}}
+  .compare-card{background:#fff;border:1.5px solid #E7DECE;border-radius:16px;padding:24px;}
+  .compare-card.us{border-color:var(--accent);box-shadow:0 14px 30px rgba(240,101,26,0.12);}
+  .compare-card h3{font-family:'Fraunces',serif;font-size:16px;margin:0 0 14px;color:var(--ink);}
+  .compare-card ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .compare-card li{font-size:13.5px;color:#4A4238;padding-left:22px;position:relative;line-height:1.5;}
+  .compare-card li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .compare-note{font-size:13px;color:#6B5F4F;margin-top:18px;line-height:1.6;}
+
+  /* Downloads (reused pattern) */
+  .downloads-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media (max-width:760px){.downloads-grid{grid-template-columns:1fr;}}
+  .download-card{background:#FFFFFF;border:1.5px solid #E7DECE;border-radius:18px;padding:28px;display:flex;flex-direction:column;}
+  .download-tag{
+    display:inline-block;font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--accent);
+    background:#FBE7D6;border-radius:8px;padding:5px 12px;align-self:flex-start;margin-bottom:14px;
+  }
+  .download-card h3{font-family:'Fraunces',serif;font-size:18px;margin:0 0 10px;color:var(--ink);}
+  .download-card ul{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .download-card li{font-size:13.5px;color:#5C5347;padding-left:20px;position:relative;}
+  .download-card li::before{content:'\2713';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .download-btn{
+    align-self:flex-start;background:var(--ink);color:#fff;border:none;border-radius:10px;
+    padding:12px 22px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer;
+  }
+
+  /* FAQ */
+  .faq-list{display:flex;flex-direction:column;gap:12px;max-width:820px;}
+  .faq-item{background:#FFFFFF;border:1px solid #E7DECE;border-radius:14px;padding:4px 22px;}
+  .faq-item summary{
+    padding:17px 0;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-size:19px;color:var(--accent);flex:none;}
+  .faq-item[open] summary::after{content:'\2212';}
+  .faq-item p{font-size:13.5px;line-height:1.6;color:#5C5347;margin:0 0 18px;}
+
+  /* CTA band */
+  .cta-band{
+    background:linear-gradient(135deg, var(--navy) 0%, #1C2740 100%);color:#fff;border-radius:26px;
+    margin:0 24px;padding:clamp(36px,6vw,56px) clamp(24px,6vw,56px);text-align:center;
+    max-width:1172px;margin-left:auto;margin-right:auto;
+  }
+  .cta-band h2{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,30px);margin:0 0 12px;color:#fff;text-wrap:balance;}
+  .cta-band p{font-size:14.5px;color:var(--muted);max-width:50ch;margin:0 auto 24px;}
+  .cta-band .hero-ctas{margin-bottom:0;}
+
+  /* Footer */
+  footer{background:var(--navy);color:var(--muted);margin-top:clamp(48px,7vw,80px);padding-top:clamp(40px,6vw,60px);}
+  .footer-grid{max-width:1220px;margin:0 auto;padding:0 24px clamp(28px,5vw,40px);display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;}
+  @media (max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+  .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .footer-brand img{height:32px;}
+  .footer-brand span{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:15px;}
+  .footer-col p{font-size:13px;line-height:1.6;max-width:34ch;margin:0;}
+  .footer-col h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin:0 0 14px;font-weight:700;}
+  .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .footer-col a{color:var(--muted);text-decoration:none;font-size:13px;}
+  .footer-col a:hover{color:#fff;}
+  .footer-bottom{
+    border-top:1px solid var(--line);padding:18px 24px;max-width:1220px;margin:0 auto;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11.5px;color:rgba(251,244,234,0.45);
+  }
+
+  /* Exam download modal (reused) */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(10,13,20,0.6);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50;}
+  .modal-card{background:var(--cream);color:var(--ink);border-radius:22px;padding:28px 28px 24px;max-width:420px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,0.5);position:relative;}
+  .modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:#EFE7D8;color:#6B5F4F;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .modal-card h3{font-family:'Fraunces',serif;font-size:20px;margin:0 0 8px;padding-right:24px;}
+  .modal-card > p{font-size:13.5px;color:#6B5F4F;line-height:1.5;margin:0 0 20px;}
+  .level-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#8A7F70;margin:0 0 10px;}
+  .level-chips{display:flex;gap:10px;margin-bottom:20px;}
+  .level-chip{flex:1;padding:13px 10px;border-radius:12px;border:1.5px solid #E7DECE;background:#FFFFFF;font-family:inherit;font-weight:600;font-size:14.5px;color:var(--ink);cursor:pointer;text-align:center;}
+  .level-chip.active{border-color:var(--accent);background:rgba(240,101,26,0.1);color:var(--accent);}
+  .quiz-email-row{display:flex;gap:8px;margin-bottom:6px;}
+  .quiz-email-row input{flex:1;padding:13px 14px;border-radius:10px;border:1.5px solid #E7DECE;font-family:inherit;font-size:14.5px;color:var(--ink);background:#fff;}
+  .quiz-email-row input:focus{outline:none;border-color:var(--accent);}
+  .quiz-submit{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:0 20px;font-weight:700;font-size:14.5px;font-family:inherit;cursor:pointer;white-space:nowrap;}
+  .modal-fineprint{font-size:11.5px;color:#9A8F80;margin-top:10px;}
+  .modal-error{font-size:12.5px;color:var(--bad);margin:-10px 0 14px;display:none;}
+  .modal-error.show{display:block;}
+  .modal-success{text-align:center;}
+  .modal-success .check{width:52px;height:52px;border-radius:50%;background:rgba(46,158,91,0.12);color:var(--good);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;}
+  .modal-success h3{margin-bottom:8px;}
+  .modal-success p{margin-bottom:0;}
+  [hidden]{display:none !important;}
+</style>
+
+<div class="pagehead">
+  <nav>
+    <a class="brand" href="index.html">
+      <img src="images/logo-icon.png" alt="InburgeringsexamenPrep.nl logo">
+      <span class="brand-word">inburgeringsexamenprep<span>.nl</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li class="has-dd" id="mockExamsDd">
+        <a class="active" href="inburgeringsexamen-oefenen.html">Mock exams <span class="dd-chev">&#9662;</span></a>
+        <div class="dd-panel">
+          <a href="inburgeringsexamen-oefenen.html">Alle oefenexamens</a>
+          <a href="inburgeringsexamen-a2.html">A2 examen</a>
+          <a href="inburgeringsexamen-b1.html">B1 examen</a>
+          <a href="knm-examen-oefenen.html">KNM oefenen</a>
+          <a href="staatsexamen-nt2.html">Staatsexamen NT2</a>
+          <a href="inburgeringscursus-kosten.html">Kosten &amp; vergelijking</a>
+        </div>
+      </li>
+      <li><a href="index.html#tijdlijn">Timeline</a></li>
+      <li><a href="index.html#pakketten">Packages</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a href="voor-docenten.html">For coaches</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a class="nav-cta" href="aanmelden.html">Book a free intake call</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Mock exams</div>
+
+  <div class="pagehead-body">
+    <div class="eyebrow">Free practice &middot; A2 &amp; B1</div>
+    <h1>Inburgeringsexamen oefenen, for every part of the exam</h1>
+    <p class="pagehead-sub">Free mock exams and practice for reading, listening, writing, speaking and KNM. Same format as the real inburgeringsexamen, with explanations, not just a score.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" type="button" id="openExamModal">Download free mock exams</button>
+      <a class="btn-ghost" href="aanmelden.html">Book a free intake call</a>
+    </div>
+    <div class="trust-row">
+      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span>5.0, 9 real reviews</span>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="onderdelen">
+  <div class="section-head">
+    <span class="section-eyebrow">Practice by part &middot; oefenexamens, proefexamens &amp; mock exams</span>
+    <h2>The inburgeringsexamen has six parts, not all of them apply to everyone</h2>
+    <p>Most people need reading, listening, writing, speaking and KNM at A2 or B1. ONA only applies if your route requires it. Jump to a part below, every oefenexamen is free to read here, with a downloadable PDF version too.</p>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <span class="skill-tag">A2 &amp; B1</span>
+      <h3>Lezen (Reading)</h3>
+      <p>Text comprehension oefenexamens in the same format as the real exam, with an explanation for every answer, not just right or wrong.</p>
+      <a class="skill-btn" href="#lezen">See reading exams</a>
+    </div>
+    <div class="skill-card">
+      <span class="skill-tag">A2 &amp; B1</span>
+      <h3>Luisteren (Listening)</h3>
+      <p>Listening fragments with questions, structured exactly like exam day, so the format itself is never the surprise.</p>
+      <a class="skill-btn" href="#luisteren">See listening exams</a>
+    </div>
+    <div class="skill-card">
+      <span class="skill-tag">A2 &amp; B1</span>
+      <h3>Schrijven (Writing)</h3>
+      <p>Writing assignments with model answers, so you know exactly what a strong answer actually looks like.</p>
+      <a class="skill-btn" href="#schrijven">See writing exams</a>
+    </div>
+    <div class="skill-card">
+      <span class="skill-tag">A2 &amp; B1</span>
+      <h3>Spreken (Speaking)</h3>
+      <p>Speaking prompts to practice out loud, usually the part people feel least prepared for on exam day.</p>
+      <a class="skill-btn" href="#spreken">See speaking exams</a>
+    </div>
+    <div class="skill-card">
+      <span class="skill-tag">Both levels</span>
+      <h3>KNM</h3>
+      <p>Knowledge of Dutch society: proefexamen questions about living, working, healthcare and everyday life in the Netherlands.</p>
+      <a class="skill-btn" href="#knm">See KNM exams</a>
+    </div>
+    <div class="skill-card">
+      <span class="skill-tag">Route-dependent</span>
+      <h3>ONA</h3>
+      <p>Orientation on the Dutch labour market, only relevant if your inburgering route requires this part.</p>
+      <a class="skill-btn" href="#ona">See ONA exams</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="bibliotheek">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">The library</span>
+      <h2>Every oefenexamen, spelled out in full</h2>
+      <p>Not just one set. A growing library of numbered oefenexamens per level and skill, full text below, plus a print-ready PDF for each one if you'd rather practice offline.</p>
+    </div>
+
+    <div class="teacher-note">
+      <p><strong>Are you a coach or docent?</strong> Everything below is free to use in your own lessons too, not just for students studying on their own.</p>
+      <a href="voor-docenten.html">Join our coach network &rarr;</a>
+    </div>
+
+    <div class="lib-block" id="lezen">
+      <div class="lib-head"><h3>Lezen, oefenexamens</h3><span>2 sets so far, A2</span></div>
+      <p class="lib-intro">Reading comprehension mock exams. Read the short text, then answer the questions. Full text and answers below, or download a clean PDF to print.</p>
+
+      <details class="set-item" open>
+        <summary><span>Lezen A2, oefenexamen 1</span><span class="tag">A2</span><span class="chev">+</span></summary>
+        <div class="set-body">
+          <div class="set-passage">
+            <strong>Een bezoek aan de huisarts</strong><br>
+            Marieke voelt zich al een paar dagen niet goed. Ze heeft hoofdpijn en is moe. Ze belt de huisarts en maakt een afspraak voor donderdagochtend om 9 uur. Op donderdag gaat ze naar de praktijk. De assistente vraagt naar haar naam en geboortedatum. Daarna mag ze wachten in de wachtkamer. Na tien minuten roept de huisarts haar naam. De huisarts stelt vragen over haar klachten en onderzoekt haar. Hij zegt dat ze veel moet rusten en veel water moet drinken.
+          </div>
+          <div class="set-q">
+            <p class="q-text">1. Waarom belt Marieke de huisarts?</p>
+            <ul><li>A. Ze wil een recept ophalen</li><li>B. Ze voelt zich niet goed</li><li>C. Ze wil een afspraak verzetten</li></ul>
+            <p class="set-answer">Antwoord: B</p>
+          </div>
+          <div class="set-q">
+            <p class="q-text">2. Wat vraagt de assistente eerst?</p>
+            <ul><li>A. Haar klachten</li><li>B. Haar verzekering</li><li>C. Haar naam en geboortedatum</li></ul>
+            <p class="set-answer">Antwoord: C</p>
+          </div>
+          <div class="set-q">
+            <p class="q-text">3. Wat adviseert de huisarts?</p>
+            <ul><li>A. Veel rusten en water drinken</li><li>B. Direct naar het ziekenhuis gaan</li><li>C. Een nieuwe afspraak maken</li></ul>
+            <p class="set-answer">Antwoord: A</p>
+          </div>
+          <button class="set-cta" type="button" data-open-level="A2">Download this set as PDF</button>
+        </div>
+      </details>
+
+      <details class="set-item">
+        <summary><span>Lezen A2, oefenexamen 2</span><span class="tag">A2</span><span class="chev">+</span></summary>
+        <div class="set-body">
+          <div class="set-passage">
+            <strong>Boodschappen doen</strong><br>
+            Elk weekend gaat Youssef naar de supermarkt. Hij maakt eerst een lijstje thuis. Op zaterdag is het altijd druk, dus hij gaat liever op zondagochtend vroeg. In de supermarkt koopt hij brood, groente, fruit en melk. Bij de kassa betaalt hij met zijn bankpas. Daarna fietst hij naar huis met zijn boodschappentassen.
+          </div>
+          <div class="set-q">
+            <p class="q-text">1. Wanneer gaat Youssef liever boodschappen doen?</p>
+            <ul><li>A. Zaterdagmiddag</li><li>B. Zondagochtend vroeg</li><li>C. Maandagavond</li></ul>
+            <p class="set-answer">Antwoord: B</p>
+          </div>
+          <div class="set-q">
+            <p class="q-text">2. Hoe betaalt Youssef?</p>
+            <ul><li>A. Met contant geld</li><li>B. Met zijn bankpas</li><li>C. Met een cadeaubon</li></ul>
+            <p class="set-answer">Antwoord: B</p>
+          </div>
+          <button class="set-cta" type="button" data-open-level="A2">Download this set as PDF</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="lib-block" id="schrijven">
+      <div class="lib-head"><h3>Schrijven, oefenexamens</h3><span>1 set so far, A2</span></div>
+      <p class="lib-intro">Writing prompts with a model answer, so you can see exactly what a passing answer actually looks like.</p>
+      <details class="set-item">
+        <summary><span>Schrijven A2, oefenexamen 1</span><span class="tag">A2</span><span class="chev">+</span></summary>
+        <div class="set-body">
+          <div class="set-passage">
+            <strong>Opdracht:</strong> Schrijf een bericht aan je buurman. Je bent op vakantie volgende week. Vraag of hij de planten water wil geven.
+          </div>
+          <div class="set-q">
+            <p class="q-text">Voorbeeldantwoord</p>
+            <div class="set-passage" style="margin-top:0;">Beste Peter, Volgende week ben ik op vakantie in Spanje. Zou jij misschien mijn planten water kunnen geven? De sleutel ligt bij mijn moeder. Alvast bedankt! Groetjes, Aisha</div>
+          </div>
+          <button class="set-cta" type="button" data-open-level="A2">Download this set as PDF</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="lib-block" id="knm">
+      <div class="lib-head"><h3>KNM, proefexamen vragen</h3><span>1 set so far, both levels</span></div>
+      <p class="lib-intro">Kennis van de Nederlandse Maatschappij, original practice questions (not copied from the real exam) about everyday life, work and healthcare in the Netherlands.</p>
+      <details class="set-item">
+        <summary><span>KNM, oefenexamen 1</span><span class="tag">A2 &amp; B1</span><span class="chev">+</span></summary>
+        <div class="set-body">
+          <div class="set-q">
+            <p class="q-text">1. Waar ga je heen als je een nieuw paspoort nodig hebt?</p>
+            <ul><li>A. De bibliotheek</li><li>B. De gemeente</li><li>C. De supermarkt</li></ul>
+            <p class="set-answer">Antwoord: B</p>
+          </div>
+          <div class="set-q">
+            <p class="q-text">2. Wat is een huisarts?</p>
+            <ul><li>A. Een dokter voor algemene medische zorg</li><li>B. Een tandarts</li><li>C. Een dierenarts</li></ul>
+            <p class="set-answer">Antwoord: A</p>
+          </div>
+          <div class="set-q">
+            <p class="q-text">3. Wanneer moet je je inschrijven bij de gemeente na een verhuizing?</p>
+            <ul><li>A. Binnen 5 dagen</li><li>B. Binnen 1 jaar</li><li>C. Dat is niet verplicht</li></ul>
+            <p class="set-answer">Antwoord: A</p>
+          </div>
+          <button class="set-cta" type="button" data-open-level="A2">Download this set as PDF</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="lib-block" id="luisteren">
+      <div class="lib-head"><h3>Luisteren, oefenexamens</h3><span>Coming soon</span></div>
+      <p class="lib-intro">Listening oefenexamens with audio fragments are next on the list. Leave your email through the download button and we'll notify you the moment the first set is live.</p>
+    </div>
+
+    <div class="lib-block" id="spreken">
+      <div class="lib-head"><h3>Spreken, oefenexamens</h3><span>Coming soon</span></div>
+      <p class="lib-intro">Speaking prompts to practice out loud, with example answers. Coming soon, this is usually the part a coach helps with most anyway.</p>
+    </div>
+
+    <div class="lib-block" id="ona">
+      <div class="lib-head"><h3>ONA, oefenexamens</h3><span>Coming soon</span></div>
+      <p class="lib-intro">Orientation on the Dutch labour market, for the routes that require it. Coming soon.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="vs-duo">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">Free practice, honestly compared</span>
+      <h2>DUO already has a free version, here's how ours is different</h2>
+      <p>DUO's own site is a solid, completely free starting point. We built this for when you want more than a pass or fail.</p>
+    </div>
+    <div class="compare">
+      <div class="compare-card">
+        <h3>DUO's free practice site</h3>
+        <ul>
+          <li>Official, always free</li>
+          <li>Good for a first look at the format</li>
+          <li>Right or wrong, no explanation why</li>
+          <li>No downloadable sets to print or practice offline</li>
+        </ul>
+      </div>
+      <div class="compare-card us">
+        <h3>InburgeringsexamenPrep.nl</h3>
+        <ul>
+          <li>Free mock exams, same format</li>
+          <li>An explanation with every answer</li>
+          <li>Downloadable A2 and B1 packs to print or save</li>
+          <li>A coach from our network if you get stuck</li>
+        </ul>
+      </div>
+    </div>
+    <p class="compare-note">Use both if that helps. We're not trying to replace DUO's free tool, we built the part it doesn't cover.</p>
+  </div>
+</section>
+
+<section class="section" id="downloads">
+  <div class="section-head">
+    <span class="section-eyebrow">Free downloads</span>
+    <h2>Download a full mock exam pack</h2>
+    <p>Leave your email and pick your level, we'll send a complete set to practice offline.</p>
+  </div>
+  <div class="downloads-grid">
+    <div class="download-card">
+      <span class="download-tag">A2</span>
+      <h3>A2 mock exam pack</h3>
+      <ul>
+        <li>Reading comprehension exam</li>
+        <li>Writing exam with model answers</li>
+        <li>KNM sample questions</li>
+      </ul>
+      <button class="download-btn" type="button" data-open-level="A2">Download A2 pack</button>
+    </div>
+    <div class="download-card">
+      <span class="download-tag">B1</span>
+      <h3>B1 mock exam pack</h3>
+      <ul>
+        <li>Reading comprehension exam</li>
+        <li>Writing exam with model answers</li>
+        <li>KNM sample questions</li>
+      </ul>
+      <button class="download-btn" type="button" data-open-level="B1">Download B1 pack</button>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="faq">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">FAQ</span>
+      <h2>Questions about practicing</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Are these mock exams the same format as the real exam?</summary>
+        <p>Yes, question types and structure follow the real inburgeringsexamen and staatsexamen NT2 formats. The content itself is our own, not copied exam material.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What's the difference with DUO's free practice site?</summary>
+        <p>DUO's version is free and official, good for getting familiar with the format. Ours adds an explanation with every answer and downloadable sets you can practice offline.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I practice listening and speaking here too?</summary>
+        <p>Yes, all six parts (reading, listening, writing, speaking, KNM and ONA where relevant) have their own practice section above.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need to practice KNM and ONA as well?</summary>
+        <p>KNM applies to almost everyone. ONA only applies if your specific inburgering route requires it, check your own PIP letter from your gemeente if you're not sure.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is this enough, or do I need coaching too?</summary>
+        <p>Practice builds familiarity with the format. Speaking and writing are the hardest to self-correct, that's usually where a coach makes the biggest difference.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  <div class="cta-band">
+    <h2>Pick a part and start practicing</h2>
+    <p>Free mock exams today, a coach from our network if you want more structure.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" type="button" id="openExamModal2">Download free mock exams</button>
+      <a class="btn-ghost" href="aanmelden.html">Book a free intake call</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <img src="images/logo-icon.png" alt="InburgeringsexamenPrep.nl logo">
+        <span>inburgeringsexamenprep.nl</span>
+      </div>
+      <p>Practice tests, downloadable exams and 1-on-1 coaching for the Dutch inburgeringsexamen, A2 and B1.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Site</h4>
+      <ul>
+        <li><a href="index.html#hoe-het-werkt">How it works</a></li>
+        <li><a href="index.html#pakketten">Packages</a></li>
+        <li><a href="index.html#reviews">Reviews</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Practice</h4>
+      <ul>
+        <li><a href="inburgeringsexamen-a2.html">A2 exam prep</a></li>
+        <li><a href="inburgeringsexamen-b1.html">B1 exam prep</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hello@inburgeringsexamenprep.nl">hello@inburgeringsexamenprep.nl</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 InburgeringsexamenPrep.nl &middot; KvK [nummer] &middot; Netherlands</span>
+    <span>Made for people who just want to pass their exam.</span>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="examModal" hidden>
+  <div class="modal-card">
+    <button class="modal-close" id="examModalClose" aria-label="Close" type="button">&times;</button>
+    <div id="examModalForm">
+      <h3>Download free mock exams</h3>
+      <p>Pick your level and we'll send a set of mock exams straight to your inbox.</p>
+      <p class="level-label">Your level</p>
+      <div class="level-chips">
+        <button class="level-chip" type="button" data-level="A2">A2</button>
+        <button class="level-chip" type="button" data-level="B1">B1</button>
+      </div>
+      <p class="modal-error" id="examError">Pick a level and enter a valid email address.</p>
+      <div class="quiz-email-row">
+        <input type="email" id="examEmail" placeholder="you@email.com">
+        <button class="quiz-submit" id="examSubmit" type="button">Send exams</button>
+      </div>
+      <p class="modal-fineprint">By submitting, you agree to receive your mock exams and occasional emails from us about inburgering prep. Unsubscribe anytime.</p>
+    </div>
+    <div class="modal-success" id="examSuccess" hidden>
+      <div class="check">&#10003;</div>
+      <h3 id="examSuccessTitle">Sent!</h3>
+      <p id="examSuccessText">Check your inbox for your mock exam set.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var toggle = document.getElementById('navToggle');
+var links = document.getElementById('navLinks');
+if(toggle){ toggle.addEventListener('click', function(){ links.classList.toggle('open'); }); }
+var mockExamsDd = document.getElementById('mockExamsDd');
+if(mockExamsDd){
+  mockExamsDd.querySelector('a').addEventListener('click', function(e){
+    if(window.innerWidth <= 860){ e.preventDefault(); mockExamsDd.classList.toggle('mobile-open'); }
+  });
+}
+
+(function(){
+  var openBtns = [document.getElementById('openExamModal'), document.getElementById('openExamModal2')];
+  var levelBtns = document.querySelectorAll('[data-open-level]');
+  var skillBtns = document.querySelectorAll('[id^="openSkillModal-"]');
+  var closeBtn = document.getElementById('examModalClose');
+  var backdrop = document.getElementById('examModal');
+  var form = document.getElementById('examModalForm');
+  var success = document.getElementById('examSuccess');
+  var chips = document.querySelectorAll('.level-chip');
+  var emailInput = document.getElementById('examEmail');
+  var submitBtn = document.getElementById('examSubmit');
+  var errorMsg = document.getElementById('examError');
+  var successTitle = document.getElementById('examSuccessTitle');
+  var successText = document.getElementById('examSuccessText');
+  var selectedLevel = null;
+
+  function openModal(){ backdrop.hidden = false; form.hidden = false; success.hidden = true; }
+  function closeModal(){ backdrop.hidden = true; }
+  function selectLevel(level){
+    selectedLevel = level;
+    chips.forEach(function(c){ c.classList.toggle('active', c.dataset.level === level); });
+    errorMsg.classList.remove('show');
+  }
+
+  openBtns.forEach(function(btn){ if(btn){ btn.addEventListener('click', openModal); } });
+  levelBtns.forEach(function(btn){ btn.addEventListener('click', function(){ openModal(); selectLevel(btn.dataset.openLevel); }); });
+  skillBtns.forEach(function(btn){ btn.addEventListener('click', openModal); });
+  if(closeBtn){ closeBtn.addEventListener('click', closeModal); }
+  if(backdrop){ backdrop.addEventListener('click', function(e){ if(e.target === backdrop){ closeModal(); } }); }
+  chips.forEach(function(chip){ chip.addEventListener('click', function(){ selectLevel(chip.dataset.level); }); });
+
+  submitBtn.addEventListener('click', function(){
+    var val = emailInput.value.trim();
+    var validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if(!selectedLevel || !validEmail){
+      errorMsg.classList.add('show');
+      emailInput.style.borderColor = validEmail ? '#E7DECE' : 'var(--bad)';
+      return;
+    }
+    form.hidden = true;
+    success.hidden = false;
+    successTitle.textContent = 'Sent!';
+    successText.textContent = 'Check your inbox for your ' + selectedLevel + ' mock exam set.';
+  });
+})();
+</script>

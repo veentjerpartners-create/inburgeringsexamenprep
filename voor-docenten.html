@@ -1,0 +1,462 @@
+<title>Voor Docenten & Taalcoaches</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --navy:#10151F; --navy-2:#161D2C; --ink:#0F1319; --white:#FFFFFF; --cream:#FBF4EA;
+    --accent:#F0651A; --accent-2:#FFB648; --line:rgba(255,255,255,0.14); --muted:rgba(251,244,234,0.68);
+    --good:#2E9E5B; --bad:#E14B4B;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} }
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;}
+
+  .pagehead{
+    position:relative;overflow:hidden;
+    background:radial-gradient(ellipse 800px 500px at 85% 0%, rgba(240,101,26,0.30), transparent 60%),
+      linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%);
+    padding-bottom:clamp(40px,6vw,64px);
+  }
+  nav{max-width:1220px;margin:0 auto;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;}
+  .brand img{height:44px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,0.35));}
+  .brand-word{font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:#fff;letter-spacing:-.01em;}
+  .brand-word span{color:var(--accent-2);}
+  .nav-links{display:flex;align-items:center;gap:26px;list-style:none;margin:0;padding:0;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;}
+  .nav-links a:hover{color:#fff;}
+  .nav-links a.active{color:#fff;border-bottom:2px solid var(--accent);padding-bottom:3px;}
+  .has-dd{position:relative;}
+  .has-dd > a{display:inline-flex;align-items:center;gap:5px;}
+  .dd-chev{font-size:10px;transition:transform .2s ease;}
+  .has-dd:hover .dd-chev, .has-dd:focus-within .dd-chev{transform:rotate(180deg);}
+  .dd-panel{
+    position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%) translateY(8px);
+    background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:10px;
+    min-width:230px;box-shadow:0 20px 44px rgba(0,0,0,0.4);
+    display:flex;flex-direction:column;gap:2px;
+    opacity:0;visibility:hidden;transition:opacity .2s ease, transform .2s ease, visibility .2s;
+    z-index:40;
+  }
+  .has-dd:hover > .dd-panel, .has-dd:focus-within > .dd-panel{
+    opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);
+  }
+  .dd-panel a{padding:9px 12px;border-radius:8px;font-size:13.5px;color:var(--muted);text-decoration:none;white-space:nowrap;}
+  .dd-panel a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+  @media (max-width:860px){
+    .dd-panel{
+      position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:none;
+      background:transparent;padding:0 0 0 14px;margin-top:6px;display:none;
+    }
+    .has-dd.mobile-open .dd-panel{display:flex;}
+    .dd-chev{display:none;}
+  }
+  .nav-cta{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:11px 20px;font-family:inherit;font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap;}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:40px;height:40px;color:#fff;}
+  @media (max-width:860px){
+    .nav-links{position:absolute;top:74px;left:16px;right:16px;background:var(--navy-2);border:1px solid var(--line);border-radius:14px;flex-direction:column;align-items:flex-start;padding:16px 20px;gap:14px;display:none;}
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+    .nav-links a{font-size:15px;}
+  }
+  .breadcrumb{max-width:1220px;margin:0 auto;padding:0 24px;font-size:12.5px;color:var(--muted);}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:#fff;}
+
+  .pagehead-body{max-width:820px;margin:0 auto;padding:22px 24px 0;text-align:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;background:rgba(240,101,26,0.14);
+    border:1px solid rgba(240,101,26,0.4);border-radius:999px;padding:7px 16px;font-size:12px;
+    font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2);margin-bottom:20px;
+  }
+  h1{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:clamp(28px,4.2vw,42px);line-height:1.14;margin:0 0 16px;text-wrap:balance;}
+  .pagehead-sub{font-size:clamp(15px,1.6vw,17px);line-height:1.6;color:var(--muted);margin:0 0 26px;}
+  .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:0;}
+  .btn-primary{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:15px 26px;font-weight:700;font-size:15px;font-family:inherit;text-decoration:none;cursor:pointer;box-shadow:0 3px 8px rgba(240,101,26,0.18);}
+  .btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,0.3);border-radius:12px;padding:14px 24px;font-weight:600;font-size:15px;font-family:inherit;text-decoration:none;}
+
+  /* TL;DR / AI-summary block */
+  .tldr{
+    max-width:760px;margin:34px auto 0;background:rgba(255,255,255,0.06);border:1px solid var(--line);
+    border-radius:16px;padding:24px 26px;text-align:left;backdrop-filter:blur(4px);
+  }
+  .tldr h2{font-family:'Fraunces',serif;font-size:14px;color:var(--accent-2);text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px;}
+  .tldr ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;}
+  @media (max-width:600px){.tldr ul{grid-template-columns:1fr;}}
+  .tldr li{font-size:13.5px;color:#fff;line-height:1.5;padding-left:20px;position:relative;}
+  .tldr li::before{content:'\2713';position:absolute;left:0;color:var(--accent-2);font-weight:700;}
+
+  .section{max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,80px) 24px;}
+  .section-alt{background:#F3ECDD;}
+  .section-alt > .section{padding-top:clamp(48px,7vw,80px);padding-bottom:clamp(48px,7vw,80px);}
+  .section-head{max-width:680px;margin:0 0 36px;}
+  .section-eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
+  .section h2{font-family:'Fraunces',serif;font-weight:600;color:var(--ink);font-size:clamp(24px,3vw,32px);line-height:1.16;margin:0 0 12px;text-wrap:balance;}
+  .section-head p{font-size:15.5px;line-height:1.6;color:#5C5347;margin:0;}
+
+  /* Voor wie */
+  .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.audience-grid{grid-template-columns:1fr;}}
+  .audience-card{background:#fff;border:1.5px solid #E7DECE;border-radius:16px;padding:22px;}
+  .audience-card h3{font-family:'Fraunces',serif;font-size:16px;margin:0 0 8px;color:var(--ink);}
+  .audience-card p{font-size:13.5px;line-height:1.55;color:#6B5F4F;margin:0;}
+
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media (max-width:900px){.steps{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.steps{grid-template-columns:1fr;}}
+  .step-card{background:#FFFFFF;border:1px solid #E7DECE;border-radius:16px;padding:24px 20px;}
+  .step-num{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin-bottom:16px;}
+  .step-card h3{font-family:'Fraunces',serif;font-size:16px;margin:0 0 8px;color:var(--ink);}
+  .step-card p{font-size:13.5px;line-height:1.55;color:#6B5F4F;margin:0;}
+
+  /* Earnings */
+  .earn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:860px){.earn-grid{grid-template-columns:1fr;}}
+  .earn-card{background:#fff;border:1.5px solid #E7DECE;border-radius:16px;padding:24px;text-align:center;}
+  .earn-card.mid{border-color:var(--accent);box-shadow:0 14px 30px rgba(240,101,26,0.12);}
+  .earn-card h3{font-family:'Fraunces',serif;font-size:15px;margin:0 0 10px;color:var(--ink);}
+  .earn-value{font-family:'Fraunces',serif;font-weight:700;font-size:28px;color:var(--accent);margin:0 0 4px;}
+  .earn-value span{font-size:13px;font-weight:500;color:#8A7F70;}
+  .earn-card p{font-size:12.5px;color:#6B5F4F;margin:10px 0 0;line-height:1.5;}
+  .earn-note{font-size:13px;color:#6B5F4F;line-height:1.6;margin-top:20px;}
+
+  /* FAQ */
+  .faq-list{display:flex;flex-direction:column;gap:12px;max-width:820px;}
+  .faq-item{background:#FFFFFF;border:1px solid #E7DECE;border-radius:14px;padding:4px 22px;}
+  .faq-item summary{padding:17px 0;font-weight:600;font-size:15px;color:var(--ink);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+';font-size:19px;color:var(--accent);flex:none;}
+  .faq-item[open] summary::after{content:'\2212';}
+  .faq-item p{font-size:13.5px;line-height:1.6;color:#5C5347;margin:0 0 18px;}
+
+  /* Apply form */
+  .apply-card{background:#fff;border:1.5px solid #E7DECE;border-radius:20px;padding:clamp(28px,4vw,40px);max-width:620px;}
+  .apply-field{margin-bottom:16px;}
+  .apply-field label{display:block;font-size:12.5px;font-weight:600;color:#6B5F4F;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em;}
+  .apply-field input, .apply-field select, .apply-field textarea{
+    width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid #E7DECE;font-family:inherit;
+    font-size:14.5px;color:var(--ink);background:#FBF4EA;
+  }
+  .apply-field input:focus, .apply-field select:focus, .apply-field textarea:focus{outline:none;border-color:var(--accent);}
+  .apply-fineprint{font-size:11.5px;color:#9A8F80;margin-top:6px;}
+  .apply-success{display:none;text-align:center;padding:20px 0;}
+  .apply-success.show{display:block;}
+  .apply-success .check{width:52px;height:52px;border-radius:50%;background:rgba(46,158,91,0.12);color:var(--good);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px;}
+
+  /* CTA band + footer */
+  .cta-band{background:linear-gradient(135deg, var(--navy) 0%, #1C2740 100%);color:#fff;border-radius:26px;margin:0 24px;padding:clamp(36px,6vw,56px) clamp(24px,6vw,56px);text-align:center;max-width:1172px;margin-left:auto;margin-right:auto;}
+  .cta-band h2{font-family:'Fraunces',serif;font-size:clamp(22px,3vw,30px);margin:0 0 12px;color:#fff;text-wrap:balance;}
+  .cta-band p{font-size:14.5px;color:var(--muted);max-width:50ch;margin:0 auto 24px;}
+  footer{background:var(--navy);color:var(--muted);margin-top:clamp(48px,7vw,80px);padding-top:clamp(40px,6vw,60px);}
+  .footer-grid{max-width:1220px;margin:0 auto;padding:0 24px clamp(28px,5vw,40px);display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;}
+  @media (max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+  .footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .footer-brand img{height:32px;}
+  .footer-brand span{font-family:'Fraunces',serif;font-weight:600;color:#fff;font-size:15px;}
+  .footer-col p{font-size:13px;line-height:1.6;max-width:34ch;margin:0;}
+  .footer-col h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:#fff;margin:0 0 14px;font-weight:700;}
+  .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .footer-col a{color:var(--muted);text-decoration:none;font-size:13px;}
+  .footer-col a:hover{color:#fff;}
+  .footer-bottom{border-top:1px solid var(--line);padding:18px 24px;max-width:1220px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:11.5px;color:rgba(251,244,234,0.45);}
+  [hidden]{display:none !important;}
+</style>
+
+<div class="pagehead">
+  <nav>
+    <a class="brand" href="index.html">
+      <img src="images/logo-icon.png" alt="InburgeringsexamenPrep.nl logo">
+      <span class="brand-word">inburgeringsexamenprep<span>.nl</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li class="has-dd" id="mockExamsDd">
+        <a href="inburgeringsexamen-oefenen.html">Mock exams <span class="dd-chev">&#9662;</span></a>
+        <div class="dd-panel">
+          <a href="inburgeringsexamen-oefenen.html">Alle oefenexamens</a>
+          <a href="inburgeringsexamen-a2.html">A2 examen</a>
+          <a href="inburgeringsexamen-b1.html">B1 examen</a>
+          <a href="knm-examen-oefenen.html">KNM oefenen</a>
+          <a href="staatsexamen-nt2.html">Staatsexamen NT2</a>
+          <a href="inburgeringscursus-kosten.html">Kosten &amp; vergelijking</a>
+        </div>
+      </li>
+      <li><a href="index.html#tijdlijn">Timeline</a></li>
+      <li><a href="index.html#pakketten">Packages</a></li>
+      <li><a href="index.html#reviews">Reviews</a></li>
+      <li><a class="active" href="voor-docenten.html">For coaches</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a class="nav-cta" href="#aanmelden">Meld je aan als docent</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Voor docenten</div>
+
+  <div class="pagehead-body">
+    <div class="eyebrow">Voor docenten &amp; taalcoaches</div>
+    <h1>Taalcoach of NT2-docent worden, zonder vast dienstverband</h1>
+    <p class="pagehead-sub">Sluit je aan bij ons docentennetwerk en ontvang leads van studenten die zich voorbereiden op het inburgeringsexamen. Geen sollicitatiegesprek, geen vast contract, een vast en aantrekkelijk tarief per pakket, en jij bepaalt zelf je planning en manier van lesgeven.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#aanmelden">Meld je aan als docent</a>
+      <a class="btn-ghost" href="#faq">Veelgestelde vragen</a>
+    </div>
+
+    <div class="tldr">
+      <h2>In het kort</h2>
+      <ul>
+        <li>&euro;25 per lead, geen abonnement, geen minimumtermijn</li>
+        <li>Jij factureert rechtstreeks aan de student</li>
+        <li>Vast tarief per pakket, geen marktplaats-percentage over je lesomzet</li>
+        <li>Geen formele NT2-bevoegdheid verplicht, aantoonbare ervaring telt</li>
+        <li>Korte intro + gratis toegang tot ons oefenmateriaal voor je eigen lessen</li>
+        <li>Volledig zzp, volledig flexibel, werk vanuit huis</li>
+        <li>Parttime naast een baan of studie is prima</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="voor-wie">
+  <div class="section-head">
+    <span class="section-eyebrow">Voor wie is dit</span>
+    <h2>Docent worden zonder diploma of vaste opleiding, kan dat?</h2>
+    <p>Ja. Een officieel NT2-certificaat is mooi meegenomen, maar geen vereiste. Wat telt is dat je aantoonbaar goed Nederlands kunt uitleggen en ervaring hebt met lesgeven, coachen of begeleiden.</p>
+  </div>
+  <div class="audience-grid">
+    <div class="audience-card">
+      <h3>Ervaren NT2- of taaldocenten</h3>
+      <p>Je hebt al een NT2-certificaat of lesgeeft al, en zoekt extra studenten zonder zelf aan marketing te hoeven doen.</p>
+    </div>
+    <div class="audience-card">
+      <h3>Zzp'ers die parttime willen lesgeven</h3>
+      <p>Je werkt al als zzp'er of freelancer en wilt lesgeven toevoegen als extra inkomstenbron, thuis of online.</p>
+    </div>
+    <div class="audience-card">
+      <h3>Ex-taalmaatjes en informele coaches</h3>
+      <p>Je hebt eerder als taalmaatje of vrijwilliger iemand geholpen met Nederlands, en wilt dat nu serieus en betaald gaan doen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="hoe-werkt-het">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">Hoe het werkt</span>
+      <h2>Van aanmelden tot je eerste les</h2>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Meld je aan</h3>
+        <p>Vul het formulier onderaan deze pagina in met je ervaring en beschikbaarheid.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>We checken je ervaring</h3>
+        <p>Elke docent in het netwerk wordt persoonlijk gescreend voordat je leads ontvangt, dat is ook in jouw belang.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Korte intro + materiaal</h3>
+        <p>Je krijgt een korte intro in hoe het netwerk werkt, plus gratis toegang tot ons oefenmateriaal om in je eigen lessen te gebruiken.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Je ontvangt leads</h3>
+        <p>&euro;25 per lead, je ziet niveau, deadline en beschikbaarheid van de student voordat je contact opneemt. Facturatie loopt daarna rechtstreeks tussen jou en de student.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="verdienen">
+  <div class="section-head">
+    <span class="section-eyebrow">Wat je verdient</span>
+    <h2>Vaste tarieven, geen onderhandelen, geen marktplaats-percentage</h2>
+    <p>Dit zijn de vaste pakketprijzen die studenten op de site zien en betalen. Jij ontvangt dat bedrag rechtstreeks, wij nemen nooit een percentage van je lesomzet, alleen de eenmalige leadfee.</p>
+  </div>
+  <div class="earn-grid">
+    <div class="earn-card">
+      <h3>Groepscoaching, 3-4 personen</h3>
+      <div class="earn-value">&euro;150<span>/mnd p.p.</span></div>
+      <p>6 lesuren per maand, verdeeld over meerdere studenten tegelijk</p>
+    </div>
+    <div class="earn-card mid">
+      <h3>Duo-coaching</h3>
+      <div class="earn-value">&euro;175<span>/mnd p.p.</span></div>
+      <p>Twee studenten, zelfde 6 lesuren per maand</p>
+    </div>
+    <div class="earn-card">
+      <h3>1-op-1 coaching</h3>
+      <div class="earn-value">&euro;265<span>/mnd</span></div>
+      <p>6 lesuren per maand, &euro;25 leadkosten eenmalig per student</p>
+    </div>
+  </div>
+  <p class="earn-note">Ter vergelijking: een losse lead kost je &euro;25, eenmalig, ongeacht hoe lang die student uiteindelijk bij je blijft. Bij een gemiddeld traject van 3 tot 5 maanden is dat een fractie van wat je er zelf aan overhoudt.</p>
+</section>
+
+<section class="section-alt" id="faq">
+  <div class="section">
+    <div class="section-head">
+      <span class="section-eyebrow">Veelgestelde vragen</span>
+      <h2>Vragen van docenten</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>Moet ik een NT2-certificaat hebben om docent te worden?</summary>
+        <p>Nee, een NT2-certificaat is niet verplicht. We kijken naar aantoonbare ervaring met lesgeven, taalcoaching of begeleiding, en naar hoe goed je zelf Nederlands kunt uitleggen. Heb je wel een certificaat of ben je bezig een NT2 certificaat te halen, dan is dat een pluspunt bij de screening.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Wat verdien ik per les of per student?</summary>
+        <p>Je betaalt eenmalig &euro;25 per lead die je claimt. Daarna hanteer je de vaste pakketprijs, tussen &euro;150 en &euro;265 per maand per student, afhankelijk van 1-op-1, duo of groep. Dat bedrag is voor jou, wij nemen nooit een percentage van je lesomzet.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Ben ik in loondienst of werk ik als zzp'er?</summary>
+        <p>Je werkt volledig als zzp'er of freelancer. Je factureert rechtstreeks aan je studenten, wij zitten niet tussen de betaling in en nemen geen commissie op je lesomzet.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Hoe werkt de betaling van een lead precies?</summary>
+        <p>Je ziet niveau, deadline en beschikbaarheid van een student voordat je een lead claimt. Zodra je claimt, betaal je &euro;25 en krijg je de contactgegevens, daarna regel je zelf de intake, prijsafspraak en facturatie met de student.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Kan ik dit parttime doen naast mijn baan of studie?</summary>
+        <p>Ja, de meeste docenten in ons netwerk doen dit parttime, vaak vanuit huis en op tijden die zij zelf kiezen. Je bepaalt zelf hoeveel leads je claimt en wanneer je lesgeeft.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Ik ben eerder taalmaatje of vrijwilliger geweest, telt dat als ervaring?</summary>
+        <p>Ja, dat telt zeker mee bij de screening. Veel van onze docenten zijn begonnen als taalmaatje of vrijwilliger en zijn daarna overgestapt naar betaald lesgeven.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Wat als een lead niet reageert of geen echte interesse blijkt te hebben?</summary>
+        <p>Kan gebeuren. Kun je aantonen dat een lead een no-show of duidelijk onbruikbaar was, dan krijg je een tegoed voor een volgende lead.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="aanmelden">
+  <div class="section-head">
+    <span class="section-eyebrow">Aanmelden</span>
+    <h2>Meld je aan als docent</h2>
+    <p>Vul onderstaand formulier in, we nemen binnen enkele dagen contact met je op.</p>
+  </div>
+  <div class="apply-card">
+    <div id="applyForm">
+      <div class="apply-field">
+        <label for="applyName">Naam</label>
+        <input type="text" id="applyName" placeholder="Je volledige naam">
+      </div>
+      <div class="apply-field">
+        <label for="applyEmail">E-mailadres</label>
+        <input type="email" id="applyEmail" placeholder="jij@email.com">
+      </div>
+      <div class="apply-field">
+        <label for="applyExp">Ervaring</label>
+        <select id="applyExp">
+          <option value="">Kies wat het beste past</option>
+          <option value="nt2">NT2-gecertificeerd docent</option>
+          <option value="taaldocent">Taaldocent, geen NT2-certificaat</option>
+          <option value="taalmaatje">Taalmaatje of vrijwilliger geweest</option>
+          <option value="anders">Andere lesgevende ervaring</option>
+        </select>
+      </div>
+      <div class="apply-field">
+        <label for="applyAvail">Beschikbaarheid</label>
+        <input type="text" id="applyAvail" placeholder="Bijv. avonden en weekend, parttime">
+      </div>
+      <button class="btn-primary" type="button" id="applySubmit" style="width:100%;justify-content:center;display:flex;">Verstuur aanmelding</button>
+      <p class="apply-fineprint">Door te versturen ga je akkoord met een screening en het ontvangen van e-mails over het docentennetwerk.</p>
+    </div>
+    <div class="apply-success" id="applySuccess">
+      <div class="check">&#10003;</div>
+      <h3 style="font-family:'Fraunces',serif;margin:0 0 8px;">Aanmelding ontvangen</h3>
+      <p style="color:#6B5F4F;font-size:14px;">We nemen binnen enkele dagen contact met je op.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section">
+  <div class="cta-band">
+    <h2>Liever eerst even sparren?</h2>
+    <p>Stuur ons een mail als je vragen hebt voordat je je aanmeldt, geen verplichtingen.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="mailto:docenten@inburgeringsexamenprep.nl">Mail ons</a>
+      <a class="btn-ghost" href="#faq">Bekijk de FAQ</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-brand">
+        <img src="images/logo-icon.png" alt="InburgeringsexamenPrep.nl logo">
+        <span>inburgeringsexamenprep.nl</span>
+      </div>
+      <p>Practice tests, downloadable exams and 1-on-1 coaching for the Dutch inburgeringsexamen, A2 and B1.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Site</h4>
+      <ul>
+        <li><a href="index.html#hoe-het-werkt">How it works</a></li>
+        <li><a href="index.html#pakketten">Packages</a></li>
+        <li><a href="index.html#reviews">Reviews</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Docenten</h4>
+      <ul>
+        <li><a href="#voor-wie">Voor wie</a></li>
+        <li><a href="#verdienen">Wat je verdient</a></li>
+        <li><a href="#aanmelden">Aanmelden</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:hello@inburgeringsexamenprep.nl">hello@inburgeringsexamenprep.nl</a></li>
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 InburgeringsexamenPrep.nl &middot; KvK [nummer] &middot; Netherlands</span>
+    <span>Made for people who just want to pass their exam.</span>
+  </div>
+</footer>
+
+<script>
+var toggle = document.getElementById('navToggle');
+var links = document.getElementById('navLinks');
+if(toggle){ toggle.addEventListener('click', function(){ links.classList.toggle('open'); }); }
+var mockExamsDd = document.getElementById('mockExamsDd');
+if(mockExamsDd){
+  mockExamsDd.querySelector('a').addEventListener('click', function(e){
+    if(window.innerWidth <= 860){ e.preventDefault(); mockExamsDd.classList.toggle('mobile-open'); }
+  });
+}
+
+(function(){
+  var form = document.getElementById('applyForm');
+  var success = document.getElementById('applySuccess');
+  var submitBtn = document.getElementById('applySubmit');
+  var name = document.getElementById('applyName');
+  var email = document.getElementById('applyEmail');
+
+  submitBtn.addEventListener('click', function(){
+    var validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    if(!name.value.trim() || !validEmail){
+      email.style.borderColor = validEmail ? '#E7DECE' : 'var(--bad)';
+      name.style.borderColor = name.value.trim() ? '#E7DECE' : 'var(--bad)';
+      return;
+    }
+    form.hidden = true;
+    success.classList.add('show');
+  });
+})();
+</script>
